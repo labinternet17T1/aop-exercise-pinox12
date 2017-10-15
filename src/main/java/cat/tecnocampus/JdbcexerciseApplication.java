@@ -1,5 +1,6 @@
 package cat.tecnocampus;
 
+import cat.tecnocampus.controllers.ClassroomController;
 import cat.tecnocampus.domain.Classroom;
 import cat.tecnocampus.persintence.ClassroomDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class JdbcexerciseApplication implements CommandLineRunner{
 	@Autowired
 	ClassroomDAO classroomDAO;
 
+	@Autowired
+	ClassroomController classroomController;
+
 	public static void main(String[] args) {
 		SpringApplication.run(JdbcexerciseApplication.class, args);
 	}
@@ -24,19 +28,19 @@ public class JdbcexerciseApplication implements CommandLineRunner{
 	public void run(String... strings) throws Exception {
 
 		System.out.println("Find all:");
-		classroomDAO.findAll().forEach(System.out::println);
+		classroomController.findAll().forEach(System.out::println);
 
 		System.out.println("\n\nFind capacity larger than");
-		classroomDAO.findCapacityLargerThan(50).forEach(System.out::println);
+		classroomController.findCapacityLargerThan(50).forEach(System.out::println);
 
 		System.out.println("\n\nFind capacity lower than");
-		classroomDAO.findCapacityLowerThan(60).forEach(System.out::println);
+		classroomController.findCapacityLowerThan(60).forEach(System.out::println);
 
 		System.out.println("\n\nFind no plugs");
-		classroomDAO.findWithNoPlugs().forEach(System.out::println);
+		classroomController.findWithNoPlugs().forEach(System.out::println);
 
 		System.out.println("\n\nFind with plugs");
-		classroomDAO.findWithPlugs().forEach(System.out::println);
+		classroomController.findWithPlugs().forEach(System.out::println);
 
 
 		List<Classroom> classroomList = new ArrayList<>();
@@ -44,13 +48,13 @@ public class JdbcexerciseApplication implements CommandLineRunner{
 							.name("Class1").capacity(10).orientation("sud").plugs(false).build());
 		classroomList.add(new Classroom.ClassroomBuilder()
 				.name("Class2").capacity(10).orientation("sud").plugs(false).build());
-		classroomDAO.insertBatch(classroomList);
+		classroomController.insertBatch(classroomList);
 
-		classroomDAO.insert(new Classroom.ClassroomBuilder()
+		classroomController.insert(new Classroom.ClassroomBuilder()
 				.name("Class3").capacity(10).orientation("sud").plugs(false).build());
 
 		System.out.println("Find all:");
-		classroomDAO.findAll().forEach(System.out::println);
+		classroomController.findAll().forEach(System.out::println);
 
 	}
 }
